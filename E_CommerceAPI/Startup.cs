@@ -1,4 +1,3 @@
-using E_CommerceAPI.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,8 +20,8 @@ namespace E_CommerceAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<ProductsContext>(option =>
-                option.UseSqlite(_configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DB_E_CommerceContext>(option =>
+                option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
