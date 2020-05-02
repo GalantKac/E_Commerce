@@ -1,3 +1,5 @@
+using E_CommerceAPI.Data;
+using E_CommerceAPI.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +21,12 @@ namespace E_CommerceAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            // dodanie zakresu
+            services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddControllers().AddNewtonsoftJson(options => 
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddDbContext<DB_E_CommerceContext>(option =>
                 option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
         }

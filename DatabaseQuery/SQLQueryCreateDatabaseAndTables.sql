@@ -33,6 +33,6 @@ CREATE TABLE T_Product(
 	PicturePath NVARCHAR(300),
 	ProductTypeId INT NOT NULL,
 	ProductBrandId INT NOT NULL,
-	FOREIGN KEY (ProductTypeId) REFERENCES T_ProductBrand(Id),
-	FOREIGN KEY (ProductBrandId) REFERENCES T_ProductType(Id)
+	FOREIGN KEY (ProductTypeId) REFERENCES T_ProductType(Id),
+	FOREIGN KEY (ProductBrandId) REFERENCES T_ProductBrand(Id)
 );
