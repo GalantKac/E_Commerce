@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using E_CommerceAPI.Interfaces;
+using E_CommerceAPI.Data.Specification;
 
 namespace E_CommerceAPI.Controllers
 {
@@ -9,14 +10,19 @@ namespace E_CommerceAPI.Controllers
     [ApiController]
     public class TProductsController : ControllerBase
     {
+        private readonly IGenericRepository<TProduct> _productRepository;
+        private readonly IGenericRepository<TProductBrand> _productBrandRepository;
+        private readonly IGenericRepository<TProductType> _productTypeRepository;
         #region Variables
-        private readonly IProductRepository _productRepository;
+
         #endregion Variables
 
         #region Constructor
-        public TProductsController(IProductRepository productRepository)
+        public TProductsController(IGenericRepository<TProduct> productRepository, IGenericRepository<TProductBrand> productBrandRepository, IGenericRepository<TProductType> productTypeRepository)
         {
             _productRepository = productRepository;
+            _productBrandRepository = productBrandRepository;
+            _productTypeRepository = productTypeRepository;
         }
         #endregion Constructor
 
@@ -25,28 +31,30 @@ namespace E_CommerceAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<TProduct>>> GetTProducts()
         {
-           return Ok(await _productRepository.GetProductsAsync());
+            var spec = new ProductsWithTypesAndBrandsSpecification();
+           return Ok(await _productRepository.ListAsync(spec));
         }
 
         // GET: api/TProducts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TProduct>> GetTProductById(int id)
         {
-           return Ok(await _productRepository.GetProductByIdAsync(id));
+            var spec = new ProductsWithTypesAndBrandsSpecification(id);
+           return Ok(await _productRepository.GetEntityWithSpecification(spec));
         }
 
         // GET: api/TProducts/Brands
         [HttpGet("Brands")]
         public async Task<ActionResult<IReadOnlyList<TProductBrand>>> GetProductsBrands()
         {
-            return Ok(await _productRepository.GetProductBrandsAsync());
+            return Ok(await _productBrandRepository.ListAllAsync());
         }
 
         // GET: api/TProducts/Types
         [HttpGet("Types")]
         public async Task<ActionResult<IReadOnlyList<TProductBrand>>> GetProductsTypes()
         {
-            return Ok(await _productRepository.GetProductTypesAsync());
+            return Ok(await _productTypeRepository.ListAllAsync());
         }
 
         #endregion GET Methods

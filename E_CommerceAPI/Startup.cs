@@ -1,4 +1,5 @@
 using E_CommerceAPI.Data;
+using E_CommerceAPI.Data.Repository;
 using E_CommerceAPI.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,6 +22,8 @@ namespace E_CommerceAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //dodanie zakresu generycznego
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             // dodanie zakresu
             services.AddScoped<IProductRepository, ProductRepository>();
 
