@@ -33,9 +33,9 @@ namespace E_CommerceAPI.Controllers
         #region GET Methods
         // GET: api/TProducts
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductDTO>>> GetTProducts()
+        public async Task<ActionResult<IReadOnlyList<ProductDTO>>> GetTProducts(string sort, int? brandId, int? typeId)
         {
-            var spec = new ProductsWithTypesAndBrandsSpecification();
+            var spec = new ProductsWithTypesAndBrandsSpecification(sort, brandId, typeId);
             var products = await _productRepository.ListAsync(spec);
             return Ok(_mapper.Map<IReadOnlyList<TProduct>, IReadOnlyList<ProductDTO>>(products));
         }

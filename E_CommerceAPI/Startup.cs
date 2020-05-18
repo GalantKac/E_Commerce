@@ -1,6 +1,7 @@
 using AutoMapper;
 using E_CommerceAPI.Data;
 using E_CommerceAPI.Data.Repository;
+using E_CommerceAPI.Extensions;
 using E_CommerceAPI.Helpers;
 using E_CommerceAPI.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -24,19 +25,15 @@ namespace E_CommerceAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //dodanie zakresu generycznego
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            // dodanie zakresu
-            services.AddScoped<IProductRepository, ProductRepository>();
-
             // zarejestrowanie klasy mapujacej klasy
             services.AddAutoMapper(typeof(MappingProfiles));
-
             services.AddControllers().AddNewtonsoftJson(options => 
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             services.AddDbContext<DB_E_CommerceContext>(option =>
                 option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddApplicationServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
