@@ -5,6 +5,7 @@ using E_CommerceAPI.Interfaces;
 using E_CommerceAPI.Data.Specification;
 using AutoMapper;
 using E_CommerceAPI.DTOs;
+using E_CommerceAPI.Helpers;
 
 namespace E_CommerceAPI.Controllers
 {
@@ -33,11 +34,18 @@ namespace E_CommerceAPI.Controllers
         #region GET Methods
         // GET: api/TProducts
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductDTO>>> GetTProducts(string sort, int? brandId, int? typeId)
+        public async Task<ActionResult<Pagination<ProductDTO>>> GetTProducts([FromQuery] ProductSpecificationParams productParams)
         {
-            var spec = new ProductsWithTypesAndBrandsSpecification(sort, brandId, typeId);
+            var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
+
+            var countSpec = new ProductWithFiltersForCountSpecification(productParams);
+
+            var totalItems = await _productRepository.CountAsync(countSpec);
+
             var products = await _productRepository.ListAsync(spec);
-            return Ok(_mapper.Map<IReadOnlyList<TProduct>, IReadOnlyList<ProductDTO>>(products));
+
+            var data = _mapper.Map<IReadOnlyList<TProduct>, IReadOnlyList<ProductDTO>>(products); // map all returned products from db 
+            return Ok(new Pagination<ProductDTO>(productParams.PageIndex, productParams.PageSize, totalItems, data));
         }
 
         // GET: api/TProducts/5

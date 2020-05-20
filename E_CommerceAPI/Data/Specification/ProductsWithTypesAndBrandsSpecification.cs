@@ -8,17 +8,18 @@ namespace E_CommerceAPI.Data.Specification
 {
     public class ProductsWithTypesAndBrandsSpecification : BaseSpecification<TProduct>
     {
-        public ProductsWithTypesAndBrandsSpecification(string sort, int? brandId, int? typeId)
+        public ProductsWithTypesAndBrandsSpecification(ProductSpecificationParams productParams)
             // jesli nie sa puste i sa rowne criteria doda te wartosci wywolujac knstruktor base specification,  ten zapis jest criteria do specyfikacji
-            : base(p => (!brandId.HasValue || p.ProductBrandId == brandId) && (!typeId.HasValue || p.ProductTypeId == typeId))
+            : base(p => (!productParams.BrandId.HasValue || p.ProductBrandId == productParams.BrandId) && (!productParams.TypeId.HasValue || p.ProductTypeId == productParams.TypeId))
         {
             AddInclude(item => item.ProductType);
             AddInclude(item => item.ProductBrand);
             AddOrderByAsc(x => x.Name);
+            ApplyPaging(productParams.PageSize * (productParams.PageIndex - 1), productParams.PageSize); //set item on one page
 
-            if (!string.IsNullOrEmpty(sort))
+            if (!string.IsNullOrEmpty(productParams.Sort))
             {
-                switch (sort)
+                switch (productParams.Sort)
                 {
                     case "priceAsc":
                         AddOrderByAsc(p => p.Price);

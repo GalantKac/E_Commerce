@@ -34,7 +34,7 @@ namespace E_CommerceAPI.Data.Repository
                 query = query.OrderByDescending(specification.OrderByDesc);
 
             if (specification.IsPagingEnabled)
-                query = query.Skip(specification.Skip).Take(specification.Take);
+                query = query.Skip(specification.Skip).Take(specification.Take); //skip elements , take elements
 
             //dodawanie wszystkich (zalaczenie) obiektow z listy do zapytania
             query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
@@ -65,6 +65,11 @@ namespace E_CommerceAPI.Data.Repository
         {
             //_context.Set<T>().AsQueryable() - zapytanie do tabeli T , specyfiakcja to wszystkie warunki , na końcu w jakiej postaci
             return await GetQuery(_context.Set<T>().AsQueryable(), specification).ToListAsync();
+        }
+
+        public async Task<int> CountAsync(ISpecification<T> specification)
+        {
+            return await GetQuery(_context.Set<T>().AsQueryable(), specification).CountAsync();
         }
 
         #endregion Extend Interfaces Methods
