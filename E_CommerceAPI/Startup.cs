@@ -34,6 +34,18 @@ namespace E_CommerceAPI
                 option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
             services.AddApplicationServices();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    //Zabezpieczenia przegl¹darki uniemo¿liwiaj¹ stronom sieci Web wykonywanie ¿¹dañ do innej domeny ni¿ ta, która by³a obs³ugiwana przez stronê sieci Web. 
+                    //To ograniczenie jest nazywane zasadami tego samego Ÿród³a.
+                    //Zasady tego samego Ÿród³a uniemo¿liwiaj¹ z³oœliwej lokacji odczytywanie poufnych danych z innej lokacji. 
+                    //Czasami mo¿esz chcieæ zezwoliæ innym lokacjom na wykonywanie ¿¹dañ miêdzy Ÿród³ami do aplikacji. 
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +60,8 @@ namespace E_CommerceAPI
 
             app.UseRouting();
             app.UseStaticFiles();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 

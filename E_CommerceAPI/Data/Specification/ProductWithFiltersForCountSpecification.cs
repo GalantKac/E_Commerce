@@ -9,7 +9,10 @@ namespace E_CommerceAPI.Data.Specification
     public class ProductWithFiltersForCountSpecification : BaseSpecification<TProduct>
     {
         public ProductWithFiltersForCountSpecification(ProductSpecificationParams productParams)
-          : base(p => (!productParams.BrandId.HasValue || p.ProductBrandId == productParams.BrandId) && (!productParams.TypeId.HasValue || p.ProductTypeId == productParams.TypeId))
+          : base(p =>
+            (string.IsNullOrEmpty(productParams.Search) || p.Name.ToLower().Contains(productParams.Search)) && // search product by name
+            (!productParams.BrandId.HasValue || p.ProductBrandId == productParams.BrandId) && // search prodcut by brand id and
+            (!productParams.TypeId.HasValue || p.ProductTypeId == productParams.TypeId)) // search product by type id 
         {
         }
     }

@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace E_CommerceAPI.Helpers
 {
+    /// <summary>
+    /// klasa laczaca dane liczby wyswietlanych itemow z calym contextem zwroconym z bazy
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Pagination<T> where T : class
     {
         public Pagination(int pageIndex, int pageSize, int count, IReadOnlyList<T> data)

@@ -9,8 +9,11 @@ namespace E_CommerceAPI.Data.Specification
     public class ProductsWithTypesAndBrandsSpecification : BaseSpecification<TProduct>
     {
         public ProductsWithTypesAndBrandsSpecification(ProductSpecificationParams productParams)
-            // jesli nie sa puste i sa rowne criteria doda te wartosci wywolujac knstruktor base specification,  ten zapis jest criteria do specyfikacji
-            : base(p => (!productParams.BrandId.HasValue || p.ProductBrandId == productParams.BrandId) && (!productParams.TypeId.HasValue || p.ProductTypeId == productParams.TypeId))
+            // add criteria
+            : base(p => 
+            (string.IsNullOrEmpty(productParams.Search) || p.Name.ToLower().Contains(productParams.Search)) && // search product by name
+            (!productParams.BrandId.HasValue || p.ProductBrandId == productParams.BrandId) && // searach product by  brand id
+            (!productParams.TypeId.HasValue || p.ProductTypeId == productParams.TypeId)) // search product by type id
         {
             AddInclude(item => item.ProductType);
             AddInclude(item => item.ProductBrand);

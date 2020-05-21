@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace E_CommerceAPI.Data.Specification
 {
+    /// <summary>
+    /// Klasa generyczna zawierająca poodstawową specyfikacje 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class BaseSpecification<T> : ISpecification<T>
     {
         public BaseSpecification()

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace E_CommerceAPI.Data.Specification
 {
+    /// <summary>
+    /// klasa która przechowuje specyfiakcje parametrow, wyszukiwania produktow
+    /// </summary>
     public class ProductSpecificationParams
     {
         private const int MaxPageSize = 50;
@@ -21,5 +24,13 @@ namespace E_CommerceAPI.Data.Specification
         public int? BrandId { get; set; }
         public int? TypeId { get; set; }
         public string Sort { get; set; }
+
+        private string _search;
+
+        public string Search
+        {
+            get => _search;
+            set => _search = value.ToLower();
+        }
     }
 }

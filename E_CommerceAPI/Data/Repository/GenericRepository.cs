@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace E_CommerceAPI.Data.Repository
 {
+    /// <summary>
+    /// Klas generyczna której metody zwaracaj wynik zapytań z bazy danych
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly DB_E_CommerceContext _context;
