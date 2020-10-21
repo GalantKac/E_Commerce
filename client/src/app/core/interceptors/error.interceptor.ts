@@ -17,14 +17,13 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
-      delay(1000),
       catchError(catchedError => {
         if (catchedError) {
           if (catchedError.status === 400) {
-            if(catchedError.error.errors){
+            if (catchedError.error.errors) {
               throw catchedError.error;
             }
-            else{
+            else {
               this.toastr.error(catchedError.error.message, catchedError.error.statusCode);
             }
           }
@@ -35,7 +34,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             this.router.navigateByUrl('/not-found');
           }
           if (catchedError.status === 500) {
-            const navigationExtras: NavigationExtras = {state: {error: catchedError.error}};
+            const navigationExtras: NavigationExtras = { state: { error: catchedError.error } };
             this.router.navigateByUrl('/server-error', navigationExtras);
           }
           return throwError(catchedError);
