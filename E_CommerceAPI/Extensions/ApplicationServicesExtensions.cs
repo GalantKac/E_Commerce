@@ -18,6 +18,7 @@ namespace E_CommerceAPI.Extensions
             // dodanie zakresu
             services.AddScoped<IProductRepository, ProductRepository>();
 
+            services.AddScoped<IBasketRepository, BasketRepository>();
             return services;
         }
     }
