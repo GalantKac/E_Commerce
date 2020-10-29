@@ -34,7 +34,7 @@ namespace E_CommerceAPI
             services.AddDbContext<DB_E_CommerceContext>(option =>
                 option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddSingleton<ConnectionMultiplexer>(c =>
+            services.AddSingleton<IConnectionMultiplexer>(c =>
             {
                 var config = ConfigurationOptions.Parse(_configuration.GetConnectionString("Redis"), true);
                 return ConnectionMultiplexer.Connect(config);
