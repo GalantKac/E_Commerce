@@ -50,7 +50,7 @@ namespace E_CommerceAPI
                     //To ograniczenie jest nazywane zasadami tego samego Ÿród³a.
                     //Zasady tego samego Ÿród³a uniemo¿liwiaj¹ z³oœliwej lokacji odczytywanie poufnych danych z innej lokacji. 
                     //Czasami mo¿esz chcieæ zezwoliæ innym lokacjom na wykonywanie ¿¹dañ miêdzy Ÿród³ami do aplikacji. 
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200", "http://localhost:4200");
                 });
             });
         }

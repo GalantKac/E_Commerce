@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {BasketService} from './basket/basket.service';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +8,19 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  //pole
   title = 'E_Commerce';
 
-  constructor(private http: HttpClient) { }
+  constructor(private basketSerivce: BasketService) {
+  }
 
-  //metody interfejsu
   ngOnInit(): void {
+    const basketId = localStorage.getItem('basket_id');
+    if (basketId) {
+      this.basketSerivce.getBasket(basketId).subscribe(() => {
+        console.log('initalised basket');
+      }, error => {
+        console.log(error);
+      });
+    }
   }
 }
