@@ -3,6 +3,7 @@ using E_CommerceAPI.Data;
 using E_CommerceAPI.Data.Repository;
 using E_CommerceAPI.Extensions;
 using E_CommerceAPI.Helpers;
+using E_CommerceAPI.Identity;
 using E_CommerceAPI.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +35,11 @@ namespace E_CommerceAPI
             services.AddDbContext<DB_E_CommerceContext>(option =>
                 option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDbContext<AppIdentityDbContext>(options =>
+            {
+                options.UseSqlServer(_configuration.GetConnectionString("IdentityConnection"));
+            });
+
             services.AddSingleton<IConnectionMultiplexer>(c =>
             {
                 var config = ConfigurationOptions.Parse(_configuration.GetConnectionString("Redis"), true);
@@ -41,6 +47,7 @@ namespace E_CommerceAPI
             });
 
             services.AddApplicationServices();
+            services.AddIdentityServices();
 
             services.AddCors(options =>
             {
