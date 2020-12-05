@@ -47,7 +47,7 @@ namespace E_CommerceAPI
             });
 
             services.AddApplicationServices();
-            services.AddIdentityServices();
+            services.AddIdentityServices(_configuration);
 
             services.AddCors(options =>
             {
@@ -77,6 +77,7 @@ namespace E_CommerceAPI
 
             app.UseCors("CorsPolicy");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

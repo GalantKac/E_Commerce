@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using E_CommerceAPI.DTOs;
+using ProductLibrary.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ namespace E_CommerceAPI.Helpers
                 .ForMember(dto => dto.ProductBrand, options => options.MapFrom(source => source.ProductBrand.Name))
                 .ForMember(dto => dto.ProductType, options => options.MapFrom(source => source.ProductType.Name))
                 .ForMember(dto => dto.PicturePath, options => options.MapFrom<ProductUrlResolver>());
+
+            CreateMap<Address, AddressDto>().ReverseMap();
+
         }
     }
 }
