@@ -98,6 +98,11 @@ namespace E_CommerceAPI.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
+            if(CheckEmailExistsAsyns(registerDto.Email).Result.Value)
+            {
+                return BadRequest("Object value is in use");
+            }
+
             var user = new AppUser
             {
                 DisplayName = registerDto.DisplayName,
