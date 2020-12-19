@@ -1,15 +1,15 @@
 <div class="d-flex justify-content-center mt-5">
     <div class="col-2">
-        <form>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="text-center mb-4">
                 <h1 class="h3 mb-3 font-weight-normal">Login</h1>
             </div>
 
             <label for="inputEmail" class="visually-hidden">Email</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+            <input formControlName="email" type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
 
             <label for="inputPassword" class="visually-hidden mt-2">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <input formControlName="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
             
             <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Sign in</button>
         </form>

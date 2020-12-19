@@ -81,11 +81,19 @@ namespace E_CommerceAPI.Controllers
             var user = await userManager.FindByEmailAsync(loginDto.Email);
 
             if (user == null)
-                return Unauthorized();
+                return Unauthorized(new
+                {
+                    statusCode = 401,
+                    message = "Authorized, you are not"
+                });
 
             var result = await signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
-            if (!result.Succeeded) return Unauthorized();
+            if (!result.Succeeded) return Unauthorized(new
+            {
+                statusCode = 401,
+                message = "Authorized, you are not"
+            });
 
             return new UserDto
             {
@@ -98,7 +106,7 @@ namespace E_CommerceAPI.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if(CheckEmailExistsAsyns(registerDto.Email).Result.Value)
+            if (CheckEmailExistsAsyns(registerDto.Email).Result.Value)
             {
                 return BadRequest("Object value is in use");
             }

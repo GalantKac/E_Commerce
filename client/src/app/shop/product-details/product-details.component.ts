@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {IProduct} from 'src/app/shared/models/product';
-import {BreadcrumbService} from 'xng-breadcrumb';
-import {ShopService} from '../shop.service';
-import {BasketService} from '../../basket/basket.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { IProduct } from 'src/app/shared/models/product';
+import { BreadcrumbService } from 'xng-breadcrumb';
+import { ShopService } from '../shop.service';
+import { BasketService } from '../../basket/basket.service';
 
 @Component({
   selector: 'app-product-details',
@@ -14,7 +14,11 @@ export class ProductDetailsComponent implements OnInit {
   product: IProduct;
   quantity = 1;
 
-  constructor(private shopService: ShopService, private activateRoute: ActivatedRoute, private bcService: BreadcrumbService, private basketService: BasketService) {
+  constructor(private shopService: ShopService,
+    private activateRoute: ActivatedRoute,
+    private bcService: BreadcrumbService,
+    private basketService: BasketService
+    ) {
     this.bcService.set('@productDetails', ' ');
   }
 
