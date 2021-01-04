@@ -108,7 +108,12 @@ namespace E_CommerceAPI.Controllers
         {
             if (CheckEmailExistsAsyns(registerDto.Email).Result.Value)
             {
-                return BadRequest("Object value is in use");
+                return BadRequest(
+                    new
+                    {
+                        statusCode = 400,
+                        errors = new [] { "Object value is in use" }
+                    });
             }
 
             var user = new AppUser
