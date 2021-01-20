@@ -25,18 +25,21 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
     control.updateValueAndValidity();
   }
 
-  onChange(event) {}
+  onChange(event) { }
 
-  onTouch() {}
+  onTouch() { }
 
+  // metoda z ControlValueAccessor
   writeValue(obj: any): void {
     this.input.nativeElement.value = obj || '';
   }
 
+  // metoda z ControlValueAccessor
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
+  // metoda z ControlValueAccessor
   registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }
