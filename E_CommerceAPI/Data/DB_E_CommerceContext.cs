@@ -19,14 +19,6 @@ namespace E_CommerceAPI
         public virtual DbSet<TProductBrand> TProductBrand { get; set; }
         public virtual DbSet<TProductType> TProductType { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=DB_E_Commerce;Integrated Security=True");
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TProduct>(entity =>

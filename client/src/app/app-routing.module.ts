@@ -1,3 +1,4 @@
+import { AuthGuard } from './core/guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './core/not-found/not-found.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'basket', loadChildren: () => import('./basket/basket.module').then(mod => mod.BasketModule), data: { breadcrumb: 'Basket' } },
   {
     path: 'checkout',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./checkout/checkout.module').then(mod => mod.CheckoutModule),
     data: { breadcrumb: 'Checkout' }
   },
