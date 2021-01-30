@@ -6,23 +6,24 @@ using E_CommerceAPI.Data.Specification;
 using AutoMapper;
 using E_CommerceAPI.DTOs;
 using E_CommerceAPI.Helpers;
+using ProductLibrary.Entities;
 
 namespace E_CommerceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TProductsController : ControllerBase
+    public class ProductsController : ControllerBase
     {
-        private readonly IGenericRepository<TProduct> _productRepository;
-        private readonly IGenericRepository<TProductBrand> _productBrandRepository;
-        private readonly IGenericRepository<TProductType> _productTypeRepository;
+        private readonly IGenericRepository<Product> _productRepository;
+        private readonly IGenericRepository<ProductBrand> _productBrandRepository;
+        private readonly IGenericRepository<ProductType> _productTypeRepository;
         private readonly IMapper _mapper;
         #region Variables
 
         #endregion Variables
 
         #region Constructor
-        public TProductsController(IGenericRepository<TProduct> productRepository, IGenericRepository<TProductBrand> productBrandRepository, IGenericRepository<TProductType> productTypeRepository, IMapper mapper)
+        public ProductsController(IGenericRepository<Product> productRepository, IGenericRepository<ProductBrand> productBrandRepository, IGenericRepository<ProductType> productTypeRepository, IMapper mapper)
         {
             _productRepository = productRepository;
             _productBrandRepository = productBrandRepository;
@@ -44,7 +45,7 @@ namespace E_CommerceAPI.Controllers
 
             var products = await _productRepository.ListAsync(spec);
 
-            var data = _mapper.Map<IReadOnlyList<TProduct>, IReadOnlyList<ProductDTO>>(products); // map all returned products from db 
+            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDTO>>(products); // map all returned products from db 
             return Ok(new Pagination<ProductDTO>(productParams.PageIndex, productParams.PageSize, totalItems, data));
         }
 
@@ -54,19 +55,19 @@ namespace E_CommerceAPI.Controllers
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(id);
             var product = await _productRepository.GetEntityWithSpecification(spec);
-            return _mapper.Map<TProduct, ProductDTO>(product);
+            return _mapper.Map<Product, ProductDTO>(product);
         }
 
         // GET: api/TProducts/Brands
         [HttpGet("Brands")]
-        public async Task<ActionResult<IReadOnlyList<TProductBrand>>> GetProductsBrands()
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductsBrands()
         {
             return Ok(await _productBrandRepository.ListAllAsync());
         }
 
         // GET: api/TProducts/Types
         [HttpGet("Types")]
-        public async Task<ActionResult<IReadOnlyList<TProductBrand>>> GetProductsTypes()
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductsTypes()
         {
             return Ok(await _productTypeRepository.ListAllAsync());
         }

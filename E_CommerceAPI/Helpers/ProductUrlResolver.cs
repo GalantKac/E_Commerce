@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace E_CommerceAPI.Helpers
 {
-    public class ProductUrlResolver : IValueResolver<TProduct, ProductDTO, string>
+    public class ProductUrlResolver : IValueResolver<Product, ProductDTO, string>
     {
         private readonly IConfiguration _config;
 
@@ -18,10 +18,10 @@ namespace E_CommerceAPI.Helpers
             _config = config;
         }
 
-        public string Resolve(TProduct source, ProductDTO destination, string destMember, ResolutionContext context)
+        public string Resolve(Product source, ProductDTO destination, string destMember, ResolutionContext context)
         {
-            if (!string.IsNullOrEmpty(source.PicturePath))
-                return _config["ApiUrl"] + source.PicturePath;
+            if (!string.IsNullOrEmpty(source.PictureUrl))
+                return _config["ApiUrl"] + source.PictureUrl;
 
             return null;
         }

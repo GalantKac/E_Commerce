@@ -6,6 +6,9 @@ using ProductLibrary.Entities.Identity;
 using E_CommerceAPI.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System;
+using Microsoft.Extensions.Logging;
+using E_CommerceAPI.Data;
 
 namespace E_CommerceAPI
 {
@@ -14,21 +17,26 @@ namespace E_CommerceAPI
         public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+                var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 
                 try
                 {
+                    var context = services.GetRequiredService<DB_E_CommerceContext>();
+                    await context.Database.MigrateAsync();
+                    await DB_E_CommerceContextSeed.SeedAsync(context, loggerFactory);
+
                     var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     var identityContext = services.GetRequiredService<AppIdentityDbContext>();
                     await identityContext.Database.MigrateAsync();
                     await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
                 }
-                catch
+                catch(Exception ex)
                 {
-
+                    var logger = loggerFactory.CreateLogger<Program>();
+                    logger.LogError(ex, "An error occured during migration");
                 }
             }
 

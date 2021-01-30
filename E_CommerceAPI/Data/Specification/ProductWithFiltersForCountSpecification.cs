@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_CommerceAPI.Data.Specification
 {
-    public class ProductWithFiltersForCountSpecification : BaseSpecification<TProduct>
+    public class ProductWithFiltersForCountSpecification : BaseSpecification<Product>
     {
         public ProductWithFiltersForCountSpecification(ProductSpecificationParams productParams)
           : base(p =>

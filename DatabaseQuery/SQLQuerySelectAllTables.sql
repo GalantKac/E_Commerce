@@ -2,8 +2,11 @@ GO
 
 USE DB_E_Commerce
 
-SELECT * FROM T_ProductBrand;
+GO
 
-SELECT * FROM T_ProductType;
-
-SELECT * FROM T_Product;
+SELECT * FROM Products;
+SELECT * FROM ProductBrands;
+SELECT * FROM ProductTypes;
+SELECT * FROM DeliveryMethods;
+SELECT * FROM OrderItems;
+SELECT * FROM Orders;

@@ -1,5 +1,6 @@
 ﻿using E_CommerceAPI.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using ProductLibrary.Entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,33 +18,33 @@ namespace E_CommerceAPI.Data
             _context = context;
         }
 
-        public async Task<TProduct> GetProductByIdAsync(int id)
+        public async Task<Product> GetProductByIdAsync(int id)
         {
-            TProduct tProduct = await _context.TProduct.Include(item => item.ProductType).Include(item => item.ProductBrand).FirstOrDefaultAsync(item => item.Id == id);
+            Product product = await _context.Products.Include(item => item.ProductType).Include(item => item.ProductBrand).FirstOrDefaultAsync(item => item.Id == id);
 
-            if (tProduct == null)
+            if (product == null)
                 return null;
 
-            return tProduct;
+            return product;
         }
 
-        public async Task<IReadOnlyList<TProduct>> GetProductsAsync()
+        public async Task<IReadOnlyList<Product>> GetProductsAsync()
         {
-            return await _context.TProduct.Include(item => item.ProductType).Include(item => item.ProductBrand).ToListAsync();
+            return await _context.Products.Include(item => item.ProductType).Include(item => item.ProductBrand).ToListAsync();
         }
-        public async Task<IReadOnlyList<TProductBrand>> GetProductBrandsAsync()
+        public async Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync()
         {
-            return await _context.TProductBrand.ToListAsync();
-        }
-
-        public async Task<IReadOnlyList<TProductType>> GetProductTypesAsync()
-        {
-            return await _context.TProductType.ToListAsync();
+            return await _context.ProductBrands.ToListAsync();
         }
 
-        private bool TProductExists(int id)
+        public async Task<IReadOnlyList<ProductType>> GetProductTypesAsync()
         {
-            return _context.TProduct.Any(e => e.Id == id);
+            return await _context.ProductTypes.ToListAsync();
+        }
+
+        private bool ProductExists(int id)
+        {
+            return _context.Products.Any(e => e.Id == id);
         }
     }
 }

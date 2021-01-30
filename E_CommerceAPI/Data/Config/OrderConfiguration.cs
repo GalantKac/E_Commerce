@@ -12,10 +12,9 @@ namespace E_CommerceAPI.Data.Config
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            // konfiguracja relacji
+            // shipToAddress bedzie zawarty w tabeli order (nie bedzie miec osobnej tabeli)
             builder.OwnsOne(o => o.ShipToAddress, a =>
             {
-                // relacja ShipToAddress z order
                 a.WithOwner();
             });
 
@@ -26,6 +25,9 @@ namespace E_CommerceAPI.Data.Config
                     o => o.ToString(),
                     o => (OrderStatus)Enum.Parse(typeof(OrderStatus), o)
                 );
+
+            builder.Property(i => i.Subtotal)
+                .HasColumnType("decimal(18,2)");
 
             builder.HasMany(o => o.OrderItems).WithOne().OnDelete(DeleteBehavior.Cascade);
         }

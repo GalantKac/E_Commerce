@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProductLibrary.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_CommerceAPI.Data.Specification
 {
-    public class ProductsWithTypesAndBrandsSpecification : BaseSpecification<TProduct>
+    public class ProductsWithTypesAndBrandsSpecification : BaseSpecification<Product>
     {
         public ProductsWithTypesAndBrandsSpecification(ProductSpecificationParams productParams)
             // add criteria
