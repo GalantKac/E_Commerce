@@ -28,21 +28,21 @@ export class ShopService {
     params = params.append('PageIndex', shopParams.pageNumber.toString());
     params = params.append('PageSize', shopParams.pageSize.toString());
 
-    return this.http.get<IPagination>(this.baseUrl + 'TProducts', { observe: 'response', params })
+    return this.http.get<IPagination>(this.baseUrl + 'Products', { observe: 'response', params })
       .pipe(map(response => {
         return response.body;
       }));
   }
 
   getProduct(id: number) {
-    return this.http.get<IProduct>(this.baseUrl + 'TProducts/' + id);
+    return this.http.get<IProduct>(this.baseUrl + 'Products/' + id);
   }
 
   getBrands() {
-    return this.http.get<IBrand[]>(this.baseUrl + 'TProducts/Brands');
+    return this.http.get<IBrand[]>(this.baseUrl + 'Products/Brands');
   }
 
   getTypes() {
-    return this.http.get<IType[]>(this.baseUrl + 'TProducts/Types');
+    return this.http.get<IType[]>(this.baseUrl + 'Products/Types');
   }
 }

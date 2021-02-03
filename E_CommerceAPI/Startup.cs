@@ -29,9 +29,7 @@ namespace E_CommerceAPI
         {
             // zarejestrowanie klasy mapujacej klasy
             services.AddAutoMapper(typeof(MappingProfiles));
-            services.AddControllers().AddNewtonsoftJson(options => 
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+            services.AddControllers();
             services.AddDbContext<DB_E_CommerceContext>(option =>
                 option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 

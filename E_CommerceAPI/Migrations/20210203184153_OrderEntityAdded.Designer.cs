@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_CommerceAPI.Migrations
 {
     [DbContext(typeof(DB_E_CommerceContext))]
-    [Migration("20210130155047_OrderEntityAdded")]
+    [Migration("20210203184153_OrderEntityAdded")]
     partial class OrderEntityAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

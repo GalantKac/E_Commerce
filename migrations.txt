@@ -1,0 +1,1 @@
+dotnet ef migrations add OrderEntityAdded -p E_CommerceAPI -s E_CommerceAPI -c DB_E_CommerceContext -o Data/Migrations
