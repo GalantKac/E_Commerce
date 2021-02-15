@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-pager',
   templateUrl: './pager.component.html',
-  styleUrls: ['./pager.component.css']
+  styleUrls: ['./pager.component.scss']
 })
 export class PagerComponent implements OnInit {
   @Input() totalCount: number;
@@ -12,11 +12,11 @@ export class PagerComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
-  onPagerChange(event: any)
-  {
+  onPagerChange(event: any) {
     this.pageChanged.emit(event.page);
   }
+
 }

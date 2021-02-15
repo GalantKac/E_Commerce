@@ -1,14 +1,14 @@
-import { Router } from '@angular/router';
-import { AccountService } from './../account.service';
-import { AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { of, timer } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { FormGroup, FormBuilder, Validators, AsyncValidatorFn } from '@angular/forms';
+import { AccountService } from '../account.service';
+import { Router } from '@angular/router';
+import { timer, of } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
@@ -16,33 +16,26 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.createRegisterForm();
   }
 
   createRegisterForm() {
     this.registerForm = this.fb.group({
       displayName: [null, [Validators.required]],
-      email: [
-        null
-        , [Validators.required, Validators.pattern('^[\\w-\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]
-        , [this.validateEmailNotTaken()]
+      email: [null,
+        [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')],
+        [this.validateEmailNotTaken()]
       ],
       password: [null, [Validators.required]]
     });
   }
 
   onSubmit() {
-    console.log(this.registerForm.value);
     this.accountService.register(this.registerForm.value).subscribe(response => {
       this.router.navigateByUrl('/shop');
     }, error => {
       console.log(error);
-      if (error.errors.Password) {
-        this.errors = error.errors.Password;
-        return;
-      }
-
       this.errors = error.errors;
     });
   }
@@ -50,18 +43,18 @@ export class RegisterComponent implements OnInit {
   validateEmailNotTaken(): AsyncValidatorFn {
     return control => {
       return timer(500).pipe(
-        // switchMap pozwala nam sprawdzic czy control nie jest pusty
         switchMap(() => {
           if (!control.value) {
             return of(null);
           }
-          return this.accountService.checkEmailExist(control.value).pipe(
-            map(response => {
-              return response ? { emailExists: true } : null;
+          return this.accountService.checkEmailExists(control.value).pipe(
+            map(res => {
+              return res ? { emailExists: true } : null;
             })
           );
         })
       );
     };
   }
+
 }

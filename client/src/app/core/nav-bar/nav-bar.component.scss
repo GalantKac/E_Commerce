@@ -1,5 +1,5 @@
-.cart-no{
-    position:absolute;
+.cart-no {
+    position: absolute;
     min-height: 25px;
     min-width: 25px;
     border-radius: 50%;
@@ -11,19 +11,19 @@
     right: 32px;
 }
 
-a{
+a {
     text-decoration: none;
     color: #343a40;
+
+    &.active {
+        color: orange;
+    }
 }
 
-a.active{
-    color: orange;
-}
-
-.logo{
+.logo {
     cursor: pointer;
-}
 
-.logo:focus{
-    outline: none;
+    &:focus {
+        outline: none;
+    }
 }

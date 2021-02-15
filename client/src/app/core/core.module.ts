@@ -2,17 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { RouterModule } from '@angular/router';
-import { ServerErrorComponent } from './server-error/server-error.component';
+import { TestErrorComponent } from './test-error/test-error.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { ToastrModule } from 'ngx-toastr';
+import { ServerErrorComponent } from './server-error/server-error.component';
+import {ToastrModule} from 'ngx-toastr';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 import { SectionHeaderComponent } from './section-header/section-header.component';
-import { BreadcrumbModule } from 'xng-breadcrumb';
 import { SharedModule } from '../shared/shared.module';
 
 
 
 @NgModule({
-  declarations: [NavBarComponent, ServerErrorComponent, NotFoundComponent, SectionHeaderComponent],
+  declarations: [NavBarComponent, TestErrorComponent, NotFoundComponent, ServerErrorComponent, SectionHeaderComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -23,6 +24,9 @@ import { SharedModule } from '../shared/shared.module';
       preventDuplicates: true
     })
   ],
-  exports: [NavBarComponent, SectionHeaderComponent]
+  exports: [
+    NavBarComponent,
+    SectionHeaderComponent
+  ]
 })
 export class CoreModule { }
